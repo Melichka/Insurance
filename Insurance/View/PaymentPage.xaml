@@ -1,0 +1,215 @@
+﻿<Page x:Class="Insurance.View.PaymentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Insurance.View"
+      xmlns:uc="clr-namespace:Insurance.Component"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PaymentPage">
+
+
+    <Page.Resources>
+        <local:MyConverter x:Key="MyConverter"></local:MyConverter>
+
+        <Style TargetType="TextBlock" x:Key="BoldText">
+            <Setter Property="FontFamily" Value="Bahnschrift"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="SemiText">
+            <Setter Property="FontFamily" Value="Bahnschrift"/>
+            <Setter Property="FontSize" Value="21"/>
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Margin" Value="10, 0, 10, 1"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="IteractButton">
+            <Setter Property="Template" >
+                <Setter.Value >
+                    <ControlTemplate TargetType="{x:Type Button}" >
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="MouseOverAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="#bb9fd6" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="White" Duration="0:0:0.2"/>
+
+                            </Storyboard>
+                            <Storyboard x:Key="MouseOutAnimation" FillBehavior="Stop">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="Transparent" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="Black" Duration="0:0:0.2"/>
+
+                            </Storyboard>
+                            <Storyboard x:Key="MouseDownAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="DarkViolet" Duration="0:0:0.1" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="White" Duration="0:0:0.1"/>
+
+                            </Storyboard>
+                            <Storyboard x:Key="MouseUpAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="DarkViolet" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="White" Duration="0:0:0.2"/>
+
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+
+                        <Border x:Name="ButtonBorder" Tag="{TemplateBinding Tag}"  CornerRadius="10" BorderBrush="Transparent" BorderThickness="1" Margin="20" MinWidth="200" MinHeight="50">
+                            <Border.Background>
+                                <SolidColorBrush x:Name="ButtonBorderColor" Color="Transparent"></SolidColorBrush>
+                            </Border.Background>
+                            <ContentPresenter Margin="10" TextBlock.FontSize="30" TextBlock.FontWeight="DemiBold" x:Name="ContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            </ContentPresenter>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOverAnimation}" />
+                                </MultiTrigger.EnterActions>
+                                <MultiTrigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOutAnimation}" />
+                                </MultiTrigger.ExitActions>
+                            </MultiTrigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseDownAnimation}"/>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOutAnimation}"/>
+                                </Trigger.ExitActions>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    
+    <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromRight}">
+            <Grid>
+                <StackPanel Margin="20">
+                    
+                <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"                       
+                        FontFamily="Bahnschrift"
+                        FontSize="25"
+                        FontWeight="Bold"
+                        Margin="20">
+                    Оплата</TextBlock>
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 30, 0, 0">
+                        <TextBlock Style="{StaticResource BoldText}" Margin="0, 0, 10, 0">ФИО:</TextBlock>
+                        <TextBlock Style="{StaticResource SemiText}" Text="{Binding FIO}" Margin="0, 0, 10, 0"></TextBlock>
+                    </StackPanel>
+
+                    <StackPanel Visibility="{Binding Receive, Converter={StaticResource BooleanToVisibilityConverter}}" Orientation="Horizontal" Margin="0, 30, 0, 0">
+                        <TextBlock Style="{StaticResource BoldText}" Margin="0, 0, 10, 0">Название банка:</TextBlock>
+                        <TextBox
+                                x:Name="BankName"
+                                Margin="0, 0, 20, 0"
+                                FontFamily="Bahnschrift"
+                                FontSize="21"
+                                FontWeight="Light"
+                                MinWidth="50"
+                                MaxWidth="250"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Margin="0, 30, 0, 0">
+                        <TextBlock Style="{StaticResource BoldText}" Margin="0, 0, 10, 0">Номер карты:</TextBlock>
+                        <TextBox
+                                x:Name="CardNumber"
+                                Margin="0, 0, 20, 0"
+                                FontFamily="Bahnschrift"
+                                FontSize="21"
+                                FontWeight="Light"
+                                MaxLength="12"
+                                MinWidth="50"
+                                MaxWidth="250"/>
+                    </StackPanel>
+
+                    <StackPanel Visibility="{Binding Receive, Converter={StaticResource InverseBooleanToVisibilityConverter}}" Orientation="Horizontal" Margin="0, 30, 0, 0">
+                        <TextBlock Style="{StaticResource BoldText}" Margin="0, 0, 10, 0">CVC:</TextBlock>
+                        <uc:NumberBox
+                            x:Name="CVC"
+                            FontFamily="Bahnschrift"
+                                FontSize="21"
+                                FontWeight="Light"
+                                MinWidth="50"
+                                MaxWidth="250"
+                                MaxNumberLength="3"/>
+                    </StackPanel>
+
+                    <StackPanel Visibility="{Binding Receive, Converter={StaticResource InverseBooleanToVisibilityConverter}}" Orientation="Horizontal" Margin="0, 30, 0, 0">
+                        <TextBlock Style="{StaticResource BoldText}" Margin="0, 0, 10, 0">Срок действия:</TextBlock>
+                        <uc:NumberBox
+                            x:Name="ExpDateMonth"
+                            FontFamily="Bahnschrift"
+                                FontSize="21"
+                                FontWeight="Light"
+                                MinWidth="50"
+                                MaxWidth="250"
+                                MaxNumberLength="2"/>
+                        <TextBlock Style="{StaticResource BoldText}" Margin="0, 0, 10, 0">/</TextBlock>
+                        <uc:NumberBox
+                            x:Name="ExpDateYear"
+                            FontFamily="Bahnschrift"
+                                FontSize="21"
+                                FontWeight="Light"
+                                MinWidth="50"
+                                MaxWidth="250"
+                                MaxNumberLength="2"/>
+                    </StackPanel>
+
+                    <StackPanel Visibility="{Binding Receive, Converter={StaticResource InverseBooleanToVisibilityConverter}}" Orientation="Horizontal" Margin="0, 30, 0, 0">
+                        <TextBlock Style="{StaticResource BoldText}" Margin="0, 0, 10, 0">Сумма оплаты:</TextBlock>
+                        <uc:NumberBox
+                            x:Name="PaymentPrice"
+                            FontFamily="Bahnschrift"
+                                FontSize="21"
+                                FontWeight="Light"
+                                MinWidth="50"
+                                MaxWidth="250"
+                                MaxNumberLength="10"/>
+                    </StackPanel>
+
+                </StackPanel>
+                
+                <Button
+                    Visibility="{Binding Receive, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                    Style="{StaticResource IteractButton}" Content="Оплатить" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                    Command="{Binding SendPaymentCommand}">
+                    <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource MyConverter}">
+                        <Binding Path="Text" ElementName="CardNumber"/>
+                        <Binding Path="Number" ElementName="CVC"/>
+                        <Binding Path="Number" ElementName="ExpDateMonth"/>
+                        <Binding Path="Number" ElementName="ExpDateYear"/>
+                        <Binding Path="Number" ElementName="PaymentPrice"/>
+                    </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
+
+            <Button Visibility="{Binding Receive, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Style="{StaticResource IteractButton}" Content="Получить выплату" VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                    Command="{Binding ReceivePaymentCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource MyConverter}">
+                        <Binding Path="Text" ElementName="BankName"/>
+                        <Binding Path="Text" ElementName="CardNumber"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+        </Grid>
+        </materialDesign:TransitioningContent>
+    </Page>

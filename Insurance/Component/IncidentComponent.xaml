@@ -1,0 +1,259 @@
+﻿<UserControl x:Class="Insurance.Component.IncidentComponent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Insurance.Component"
+             xmlns:view="clr-namespace:Insurance.View"
+             xmlns:global="clr-namespace:Insurance"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+
+        <view:MyConverter x:Key="MyConverter"/>
+        <global:BoolToVisibility x:Key="BoolToVisibilityConverter"/>
+        <global:NegateBoolToVisibility x:Key="NegateBoolToVisibilityConverter"/>
+        <global:StringToVisibilityParameter x:Key="StringToVisibilityParameterConverter"/>
+
+        <Style TargetType="Button" x:Key="IteractButton">
+            <Setter Property="Template" >
+                <Setter.Value >
+                    <ControlTemplate TargetType="{x:Type Button}" >
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="MouseOverAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="#bb9fd6" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="White" Duration="0:0:0.2"/>
+
+                            </Storyboard>
+                            <Storyboard x:Key="MouseOutAnimation" FillBehavior="Stop">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="Transparent" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="Black" Duration="0:0:0.2"/>
+
+                            </Storyboard>
+                            <Storyboard x:Key="MouseDownAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="DarkViolet" Duration="0:0:0.1" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="White" Duration="0:0:0.1"/>
+
+                            </Storyboard>
+                            <Storyboard x:Key="MouseUpAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="DarkViolet" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="White" Duration="0:0:0.2"/>
+
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+
+                        <Border x:Name="ButtonBorder" Tag="{TemplateBinding Tag}"  CornerRadius="5" BorderBrush="Transparent" BorderThickness="1" Margin="10" MinWidth="200" Height="40">
+                            <Border.Background >
+                                <SolidColorBrush x:Name="ButtonBorderColor" Color="Transparent"></SolidColorBrush>
+                            </Border.Background>
+                            <ContentPresenter TextBlock.FontSize="18" TextBlock.TextAlignment="Center" TextBlock.FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="ContentPresenter" />
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOverAnimation}" />
+                                </MultiTrigger.EnterActions>
+                                <MultiTrigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOutAnimation}" />
+                                </MultiTrigger.ExitActions>
+                            </MultiTrigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseDownAnimation}"/>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOutAnimation}"/>
+                                </Trigger.ExitActions>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="RadioButton" x:Key="ConcButton">
+            <Setter Property="Template" >
+                <Setter.Value >
+                    <ControlTemplate TargetType="{x:Type RadioButton}" >
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="MouseOverAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="#bb9fd6" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="White" Duration="0:0:0.2"/>
+                                <ColorAnimation Storyboard.TargetName="Icon" Storyboard.TargetProperty="(Foreground).Color" To="White" Duration="0:0:0.2" />
+                            </Storyboard>
+                            <Storyboard x:Key="MouseOutAnimation" FillBehavior="Stop">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="Transparent" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="Black" Duration="0:0:0.2"/>
+                                <ColorAnimation Storyboard.TargetName="Icon" Storyboard.TargetProperty="(Foreground).Color" To="Black" Duration="0:0:0.2" />
+                            </Storyboard>
+                            <Storyboard x:Key="MouseDownAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="Violet" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="White" Duration="0:0:0.2"/>
+                                <ColorAnimation Storyboard.TargetName="Icon" Storyboard.TargetProperty="(Foreground).Color" To="White" Duration="0:0:0.2" />
+                            </Storyboard>
+                            <Storyboard x:Key="MouseUpAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="DarkViolet" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="White" Duration="0:0:0.2"/>
+                                <ColorAnimation Storyboard.TargetName="Icon" Storyboard.TargetProperty="(Foreground).Color" To="White" Duration="0:0:0.2" />
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+
+
+                        <Border Width="auto" x:Name="ButtonBorder" Tag="{TemplateBinding Tag}"  CornerRadius="5" BorderBrush="Transparent" BorderThickness="1" Margin="10" Height="40">
+
+                            <Border.Background>
+                                <SolidColorBrush x:Name="ButtonBorderColor" Color="Transparent"></SolidColorBrush>
+                            </Border.Background>
+                            <StackPanel FlowDirection="LeftToRight" Orientation="Horizontal">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="3*"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+                                    <materialDesign:PackIcon Grid.Column="0" Name="Icon" Tag="{TemplateBinding Tag}" Kind="{Binding Tag, RelativeSource={x:Static RelativeSource.Self}}" Foreground="Black" VerticalAlignment="Center"  Margin="10, 0, 10, 0" Width="30" Height="25" />
+                                    <ContentPresenter Margin="0,0,20,0" Grid.Column="1" TextBlock.FontSize="18" TextBlock.FontWeight="DemiBold" x:Name="ContentPresenter" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    </ContentPresenter>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                    <Condition Property="IsChecked" Value="False" />
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOverAnimation}" />
+                                </MultiTrigger.EnterActions>
+                                <MultiTrigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOutAnimation}" />
+                                </MultiTrigger.ExitActions>
+                            </MultiTrigger>
+
+                            <Trigger Property="IsChecked" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseUpAnimation}" />
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOutAnimation}" />
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.9*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2.2*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock x:Name="Id" Visibility="Collapsed" Text="{Binding Id}"/>
+        
+        <StackPanel Orientation="Vertical" Grid.Column="0">
+            <TextBlock Text="{Binding Date}"
+                       FontFamily="Bahnschrift"
+                       TextBlock.FontSize="25"
+                       TextBlock.FontWeight="DemiBold"
+                       />
+            <TextBlock Text="{Binding FullAutoName}"
+                       FontFamily="Bahnschrift"
+                       TextBlock.FontSize="20"
+                       TextBlock.FontWeight="Light"/>
+            <TextBlock Text="{Binding FIO}"
+                       FontFamily="Bahnschrift"
+                       TextBlock.FontSize="20"
+                       TextBlock.FontWeight="Light"/>
+        </StackPanel>
+
+        <TextBlock VerticalAlignment="Top" Grid.Column="1" Text="{Binding Price}"
+                   FontFamily="Bahnschrift"
+                       TextBlock.FontSize="25"
+                       TextBlock.FontWeight="DemiBold"
+                   HorizontalAlignment="Stretch"/>
+
+        <StackPanel Orientation="Vertical" Grid.Column="2">
+            <TextBlock Text="{Binding InsuranceType}" FontFamily="Bahnschrift"
+                       TextBlock.FontSize="25"
+                       TextBlock.FontWeight="DemiBold"
+                       HorizontalAlignment="Center"/>
+
+            <Button Visibility="{Binding IsAgent, Converter={StaticResource NegateBoolToVisibilityConverter}}"
+                    IsEnabled="{Binding IsActive}" Style="{StaticResource IteractButton}"
+                    Content="{Binding Status}"
+                    HorizontalAlignment="Center"
+                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, Path=DataContext.ReceivePaymentCommand}"
+                    CommandParameter="{Binding Id}">
+            
+            </Button>
+            <StackPanel Visibility="{Binding IsEnded, Converter={StaticResource NegateBoolToVisibilityConverter}}">
+                <StackPanel Visibility="{Binding IsAgent, Converter={StaticResource BoolToVisibilityConverter}}" x:Name="full" Orientation="Vertical">
+                    <RadioButton
+                        x:Name="Waiting"
+                         Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, Path=DataContext.ChangeStatusCommand}"
+                        IsChecked="{Binding Status, Converter={StaticResource StringToVisibilityParameterConverter}, ConverterParameter='На рассмотрении', Mode=OneWay}"
+                        Tag="QuestionMark" Content="На рассмотрении" Style="{StaticResource ConcButton}" GroupName="{Binding Id}">
+                        <RadioButton.CommandParameter>
+                            <MultiBinding Converter="{StaticResource MyConverter}">
+                                <Binding Path="Text" ElementName="Id"/>
+                                <Binding Path="Content" ElementName="Waiting"/>
+                            </MultiBinding>
+                        </RadioButton.CommandParameter>
+                    </RadioButton>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" MinHeight="{Binding Path=Width, ElementName=full}">
+                        <RadioButton
+                            x:Name="Accept"
+                            Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, Path=DataContext.ChangeStatusCommand}"
+                            IsChecked="{Binding Status, Converter={StaticResource StringToVisibilityParameterConverter}, ConverterParameter='Ждет выплаты', Mode=OneWay}"
+                            Tag="Check" Content="Одобрить" Style="{StaticResource ConcButton}" GroupName="{Binding Id}">
+                            <RadioButton.CommandParameter>
+                                <MultiBinding Converter="{StaticResource MyConverter}">
+                                    <Binding Path="Text" ElementName="Id"/>
+                                    <Binding Path="Content" ElementName="Accept"/>
+                                </MultiBinding>
+                            </RadioButton.CommandParameter>
+                        </RadioButton>
+                        <RadioButton             
+                            x:Name="Reject"
+                             Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, Path=DataContext.ChangeStatusCommand}"
+                            IsChecked="{Binding Status, Converter={StaticResource StringToVisibilityParameterConverter}, ConverterParameter='Отменено', Mode=OneWay}"
+                            Tag="Close" Content="Отклонить" Style="{StaticResource ConcButton}" GroupName="{Binding Id}">
+                            <RadioButton.CommandParameter>
+                                <MultiBinding Converter="{StaticResource MyConverter}">
+                                    <Binding Path="Text" ElementName="Id"/>
+                                    <Binding Path="Content" ElementName="Reject"/>
+                                </MultiBinding>
+                            </RadioButton.CommandParameter>
+                        </RadioButton>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Visibility="{Binding IsAgent, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock
+                    Visibility="{Binding IsEnded, Converter={StaticResource BoolToVisibilityConverter}}"
+                    Text="{Binding Status}"
+                    FontFamily="Bahnschrift"
+                    TextBlock.FontSize="35"
+                    TextBlock.FontWeight="DemiBold"
+                    HorizontalAlignment="Center"
+                    Margin="10"
+                    Foreground="DarkViolet"/>
+            </StackPanel>
+
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

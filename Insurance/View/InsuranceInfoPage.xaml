@@ -1,0 +1,223 @@
+﻿<Page x:Class="Insurance.View.InsuranceInfoPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:Insurance.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="InsuranceInfoPage">
+
+    <Page.Resources>
+        <Style TargetType="TextBlock" x:Key="BoldText">
+            <Setter Property="FontFamily" Value="Bahnschrift"/>
+            <Setter Property="FontSize" Value="25"/>
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="TextBlock" x:Key="SemiText">
+            <Setter Property="FontFamily" Value="Bahnschrift"/>
+            <Setter Property="FontSize" Value="21"/>
+            <Setter Property="FontWeight" Value="Light"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Margin" Value="10, 0, 10, 1"/>
+        </Style>
+
+        <Style TargetType="Button" x:Key="BackButton">
+            <Setter Property="Template" >
+                <Setter.Value >
+                    <ControlTemplate TargetType="{x:Type Button}" >
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="MouseOverAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="#bb9fd6" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="Icon" Storyboard.TargetProperty="(Foreground).Color" To="White" Duration="0:0:0.2" />
+                            </Storyboard>
+                            <Storyboard x:Key="MouseOutAnimation" FillBehavior="Stop">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="Transparent" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="Icon" Storyboard.TargetProperty="(Foreground).Color" To="Black" Duration="0:0:0.2" />
+                            </Storyboard>
+                            <Storyboard x:Key="MouseDownAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="DarkViolet" Duration="0:0:0.1" />
+                                <ColorAnimation Storyboard.TargetName="Icon" Storyboard.TargetProperty="(Foreground).Color" To="White" Duration="0:0:0.2" />
+                            </Storyboard>
+                            <Storyboard x:Key="MouseUpAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="DarkViolet" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="Icon" Storyboard.TargetProperty="(Foreground).Color" To="White" Duration="0:0:0.2" />
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+
+                        <Border x:Name="ButtonBorder" Tag="{TemplateBinding Tag}" CornerRadius="25" BorderBrush="Transparent" BorderThickness="1" Margin="10" Width="50" Height="50">
+                            <Border.Background>
+                                <SolidColorBrush x:Name="ButtonBorderColor" Color="Transparent"></SolidColorBrush>
+                            </Border.Background>
+                            <materialDesign:PackIcon Width="30" Height="30" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="Icon" Kind="ArrowLeft" ></materialDesign:PackIcon>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOverAnimation}" />
+                                </MultiTrigger.EnterActions>
+                                <MultiTrigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOutAnimation}" />
+                                </MultiTrigger.ExitActions>
+                            </MultiTrigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseDownAnimation}"/>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOutAnimation}"/>
+                                </Trigger.ExitActions>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button" x:Key="IteractButton">
+            <Setter Property="Template" >
+                <Setter.Value >
+                    <ControlTemplate TargetType="{x:Type Button}" >
+                        <ControlTemplate.Resources>
+                            <Storyboard x:Key="MouseOverAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="#bb9fd6" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="White" Duration="0:0:0.2"/>
+
+                            </Storyboard>
+                            <Storyboard x:Key="MouseOutAnimation" FillBehavior="Stop">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="Transparent" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="Black" Duration="0:0:0.2"/>
+
+                            </Storyboard>
+                            <Storyboard x:Key="MouseDownAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="DarkViolet" Duration="0:0:0.1" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="White" Duration="0:0:0.1"/>
+
+                            </Storyboard>
+                            <Storyboard x:Key="MouseUpAnimation">
+                                <ColorAnimation Storyboard.TargetName="ButtonBorderColor" Storyboard.TargetProperty="Color" To="DarkViolet" Duration="0:0:0.2" />
+                                <ColorAnimation Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="(TextBlock.Foreground).Color" To="White" Duration="0:0:0.2"/>
+
+                            </Storyboard>
+                        </ControlTemplate.Resources>
+
+                        <Border x:Name="ButtonBorder" Tag="{TemplateBinding Tag}"  CornerRadius="5" BorderBrush="Transparent" BorderThickness="1" Margin="20" MinWidth="200" Height="60">
+                            <Border.Background >
+                                <SolidColorBrush x:Name="ButtonBorderColor" Color="Transparent"></SolidColorBrush>
+                            </Border.Background>
+                            <ContentPresenter TextBlock.FontSize="38" TextBlock.TextAlignment="Center" TextBlock.FontWeight="DemiBold" VerticalAlignment="Center" HorizontalAlignment="Center" x:Name="ContentPresenter" />
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsMouseOver" Value="True"/>
+                                </MultiTrigger.Conditions>
+                                <MultiTrigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOverAnimation}" />
+                                </MultiTrigger.EnterActions>
+                                <MultiTrigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOutAnimation}" />
+                                </MultiTrigger.ExitActions>
+                            </MultiTrigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseDownAnimation}"/>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard Storyboard="{StaticResource MouseOutAnimation}"/>
+                                </Trigger.ExitActions>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <materialDesign:TransitioningContent OpeningEffect="{materialDesign:TransitionEffect Kind=SlideInFromRight}">
+        <Grid DataContext="{Binding Insurance}">
+            
+            <Button
+                Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, Path=DataContext.IsAgent, Converter={StaticResource InverseBooleanToVisibilityConverter}}"
+                    IsEnabled="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, Path=DataContext.isActive}"
+                    Style="{StaticResource IteractButton}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="45"
+                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, Path=DataContext.ToPaymentCommand}"
+                Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, Path=DataContext.activeText}">
+                   
+            </Button>
+            
+            <StackPanel Margin="20">
+                <TextBlock 
+                Text="{Binding Id, StringFormat={}Страховка №{0}}"                    
+                FontFamily="Bahnschrift"                   
+                TextBlock.FontSize="40"                
+                TextBlock.FontWeight="DemiBold"
+                    Margin="0,0,0,20"/>
+                
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock Style="{StaticResource BoldText}">Вид страховки:</TextBlock>
+                    <TextBlock 
+                        Style="{StaticResource SemiText}" Text="{Binding Type}" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0, 20, 0, 0">
+                    <TextBlock Style="{StaticResource BoldText}">ФИО:</TextBlock>
+                    <TextBlock 
+                        Style="{StaticResource SemiText}" Text="{Binding FIO}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0, 20, 0, 0">
+                    <TextBlock Style="{StaticResource BoldText}">Пасспорт:</TextBlock>
+                    <TextBlock Style="{StaticResource SemiText}" Text="{Binding OwnerPassport}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0, 20, 0, 0">
+                    <TextBlock Style="{StaticResource BoldText}">Вод. удостоверение:</TextBlock>
+                    <TextBlock Style="{StaticResource SemiText}" Text="{Binding OwnerSertificate}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0, 20, 0, 0">
+                    <TextBlock Style="{StaticResource BoldText}">Автомобиль:</TextBlock>
+                    <TextBlock Style="{StaticResource SemiText}" Text="{Binding AutoFullName}" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0, 20, 0, 0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource BoldText}">Дата начала:</TextBlock>
+                        <TextBlock Style="{StaticResource SemiText}" Text="{Binding StartDate}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource BoldText}">Дата конца:</TextBlock>
+                        <TextBlock Style="{StaticResource SemiText}" Text="{Binding FinishDate}" />
+                    </StackPanel>
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal" Margin="0, 20, 0, 0">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource BoldText}">Цена:</TextBlock>
+                        <TextBlock Style="{StaticResource SemiText}" Text="{Binding Price, StringFormat={}{0} руб.}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource BoldText}" Foreground="DarkViolet">Остаток:</TextBlock>
+                        <TextBlock Style="{StaticResource SemiText}" Foreground="DarkViolet" Text="{Binding LeftPrice, StringFormat={}{0} руб.}" />
+                    </StackPanel>
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal" Margin="0, 20, 0, 0">
+                    <TextBlock Style="{StaticResource BoldText}">Опыт вождения:</TextBlock>
+                    <TextBlock Style="{StaticResource SemiText}" Text="{Binding DrivingExperience, StringFormat={}{0} лет(год).}" />
+                </StackPanel>
+            </StackPanel>
+            <Button Style="{StaticResource BackButton}" VerticalAlignment="Bottom" HorizontalAlignment="Left"
+                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Page}}, Path=DataContext.BackToInsurances}"/>
+        </Grid>
+    </materialDesign:TransitioningContent>
+</Page>
